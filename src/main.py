@@ -1,5 +1,27 @@
 import numpy as np
 import sympy as sp
+import matplotlib.pyplot as plt
+
+
+def plot_polynomial(polynomial):
+    lamba = eval(f"lambda x: {polynomial}")
+
+    x = np.linspace(-10, 10, 100)
+    y = lamba(x)
+
+    plt.plot(x, y, 'r', linewidth=1)
+    plt.xlim(-10, 10)
+    plt.ylim(-10, 10)
+
+    plt.axhline(0, color='black', linewidth=1)
+    plt.axvline(0, color='black', linewidth=1)
+    plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+
+    plt.title(f'P(x): {polynomial}')
+    plt.xlabel('x')
+    plt.ylabel('y')
+    
+    plt.show()
 
 def newton_polynomial(x, y):
     """
