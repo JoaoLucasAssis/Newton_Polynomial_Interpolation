@@ -2,6 +2,45 @@ import numpy as np
 import sympy as sp
 import matplotlib.pyplot as plt
 
+def get_time_input():
+    """
+    Solicita e valida a entrada do usuário para o tempo desejado.
+
+    Returns:
+        int: O tempo inserido pelo usuário.
+    """
+
+    print("\x1b[2J\x1b[1;1H") # Limpa a tela do terminal
+
+    while True:
+        try:
+            n = int(input("Qual tempo você gostaria de saber a velocidade? (Digite -1 para sair): "))
+            if n >= -1:
+                return n
+            else:
+                print("Entrada inválida. Por favor, insira um número maior ou igual a -1.")
+        except ValueError:
+            print("Entrada inválida. Por favor, insira um número inteiro.")
+
+def estimate_velocity(polynomial):
+    """
+    Estima a velocidade do carro nos tempos não medidos usando o polinômio de interpolação.
+
+    Args:
+        polynomial (sp.Expr): O polinômio de interpolação de Newton
+    """
+
+    print("\x1b[2J\x1b[1;1H") # Limpa a tela do terminal
+
+    n = get_time_input()
+
+    while n != -1:
+        print("\x1b[2J\x1b[1;1H") # Limpa a tela do terminal
+
+        velocity = float(polynomial.subs('x', n))
+        print(f"Velocidade do carro no tempo {n}s: {velocity} m/s.")
+
+        n = get_time_input()
 
 def plot_polynomial(polynomial):
     lamba = eval(f"lambda x: {polynomial}")
@@ -20,8 +59,7 @@ def plot_polynomial(polynomial):
     plt.title(f'P(x): {polynomial}')
     plt.xlabel('x')
     plt.ylabel('y')
-    
-    plt.show()
+    plt.show()
 
 def newton_polynomial(x, y):
     """
