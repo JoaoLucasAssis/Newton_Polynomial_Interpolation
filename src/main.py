@@ -178,9 +178,39 @@ def get_points():
 
     return np.array(x), np.array(y)  # 3.0
 
+def menu():
+    """
+    Exibe um menu com opções para mostrar um gráfico ou gerar velocidades para tempos não medidos.
+    """
+
+    print("\x1b[2J\x1b[1;1H") # Limpa a tela do terminal
+
+    print("Menu")
+    print("1. Mostrar gráfico\n2. Mostrar velocidades\n3. Sair")
+
+    o = int(input("Escolha uma opção: ").strip())
+
+    while o not in [1, 2, 3]:
+        print("\x1b[2J\x1b[1;1H") # Limpa a tela do terminal
+
+        print("Opção inválida. Digite uma das opções abaixo.")
+        print("1. Mostrar gráfico\n2. Mostrar velocidades\n3. Sair")
+        o = int(input("Escolha uma opção: ").strip())
+    
+    return o
+
 def main():
+    o =  menu()
+
     x, y = get_points()
     polynomial = newton_polynomial(x, y)
+
+    if o == 1:
+        plot_polynomial(polynomial)
+    elif o == 2:
+        estimate_velocity(polynomial)
+    elif o == 3:
+        print("Encerrando o programa...")
 
 if __name__ == "__main__":
     main()
