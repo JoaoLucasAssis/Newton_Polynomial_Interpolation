@@ -2,6 +2,25 @@ import numpy as np
 import sympy as sp
 import matplotlib.pyplot as plt
 
+def least_squares(x, y):
+    n = len(x)
+    
+    sum_x = sum(x)
+    sum_y = sum(y)
+    sum_x_squared = sum(x_data ** 2 for x_data in x)
+    sum_x_times_y = sum(x_data * y_data for x_data, y_data in zip(x, y))
+
+    mean_x = sum_x / n
+    mean_y = sum_y / n
+
+    b = ((n * sum_x_times_y) - (sum_x * sum_y)) / ((n * sum_x_squared) - (sum_x ** 2))
+    a = mean_y - b * mean_x
+
+    x_symbol = sp.symbols('x')
+    polynomial = b * x_symbol + a
+
+    return sp.expand(polynomial)
+
 def get_time_input():
     """
     Solicita e valida a entrada do usuário para o tempo desejado.
@@ -9,8 +28,6 @@ def get_time_input():
     Returns:
         int: O tempo inserido pelo usuário.
     """
-
-    print("\x1b[2J\x1b[1;1H") # Limpa a tela do terminal
 
     while True:
         try:
@@ -42,13 +59,14 @@ def estimate_velocity(polynomial):
 
         n = get_time_input()
 
-def plot_polynomial(polynomial):
+def plot_polynomial(polynomial, x, y):
     lamba = eval(f"lambda x: {polynomial}")
 
-    x = np.linspace(-10, 10, 100)
-    y = lamba(x)
+    x_vals = np.linspace(-10, 10, 100)
+    y_vals = lamba(x_vals)
 
-    plt.plot(x, y, 'r', linewidth=1)
+    plt.plot(x_vals, y_vals, 'r', linewidth=1)
+    plt.scatter(x, y, color='red', label='Data points')
     plt.xlim(-10, 10)
     plt.ylim(-10, 10)
 
@@ -186,15 +204,15 @@ def menu():
     print("\x1b[2J\x1b[1;1H") # Limpa a tela do terminal
 
     print("Menu")
-    print("1. Mostrar gráfico\n2. Mostrar velocidades\n3. Sair")
+    print("1. Mostrar gráfico\n2. Mostrar velocidades\n3. Mínimos quadrados\n4. Sair")
 
     o = int(input("Escolha uma opção: ").strip())
 
-    while o not in [1, 2, 3]:
+    while o not in [1, 2, 3, 4]:
         print("\x1b[2J\x1b[1;1H") # Limpa a tela do terminal
 
         print("Opção inválida. Digite uma das opções abaixo.")
-        print("1. Mostrar gráfico\n2. Mostrar velocidades\n3. Sair")
+        print("1. Mostrar gráfico\n2. Mostrar velocidades\n3. Mínimos quadrados\n4. Sair")
         o = int(input("Escolha uma opção: ").strip())
     
     return o
@@ -203,14 +221,15 @@ def main():
     o =  menu()
 
     x, y = get_points()
-    polynomial = newton_polynomial(x, y)
 
     if o == 1:
-        plot_polynomial(polynomial)
+        plot_polynomial(newton_polynomial(x, y), x, y)
     elif o == 2:
-        estimate_velocity(polynomial)
+        estimate_velocity(newton_polynomial(x, y))
     elif o == 3:
-        print("Encerrando o programa...")
+        plot_polynomial(least_squares(x, y), x, y)
+    elif o == 4:
+        print("Encerrando o programa...")
 
 if __name__ == "__main__":
     main()
