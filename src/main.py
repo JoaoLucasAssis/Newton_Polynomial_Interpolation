@@ -12,7 +12,9 @@ def main():
     elif o == 2:
         calc.estimate_velocity(polynomial)
     elif o == 3:
-        calc.plot_polynomial(calc.least_squares(x, y), x, y)
+        calc.trapezoidal_rule(x, y)
+    # elif o == 3:
+        # calc.plot_polynomial(calc.least_squares(x, y), x, y)
     elif o == 4:
         print("Encerrando o programa...")
 

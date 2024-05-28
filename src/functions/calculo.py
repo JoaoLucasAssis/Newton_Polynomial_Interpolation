@@ -135,3 +135,24 @@ def least_squares(x, y):
     polynomial = b * x_symbol + a
 
     return sp.expand(polynomial)
+
+def trapezoidal_rule(x, y):
+    """
+    Calcula a integral dos dados de velocidade usando a regra do trapézio.
+
+    Args:
+        x (np.array): Array dos tempos.
+        y (np.array): Array das velocidades correspondentes.
+
+    Returns:
+        float: A distância total percorrida.
+    """
+    
+    # Calcula a diferença entre cada par de pontos de tempo
+    h = np.diff(x)
+    
+    # Calcula a área de cada trapézio e soma as áreas
+    area_trapezio = np.sum(h * (y[:-1] + y[1:]) / 2)
+    
+    print(f"Distância percorrida: {area_trapezio} metros.")
+    return area_trapezio
