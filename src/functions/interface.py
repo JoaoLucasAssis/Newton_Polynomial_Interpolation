@@ -49,9 +49,7 @@ def get_time_input():
     Returns:
         int: O tempo inserido pelo usuário.
     """
-
-    print("\x1b[2J\x1b[1;1H") # Limpa a tela do terminal
-
+    
     while True:
         try:
             n = int(input("Qual tempo você gostaria de saber a velocidade? (Digite -1 para sair): "))
