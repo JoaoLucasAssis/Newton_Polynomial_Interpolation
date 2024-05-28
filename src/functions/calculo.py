@@ -116,4 +116,22 @@ def estimate_velocity(polynomial):
         print(f"Velocidade do carro no tempo {n}s: {velocity} m/s.")
 
         n = gui.get_time_input()
-        
+
+def least_squares(x, y):
+    n = len(x)
+    
+    sum_x = sum(x)
+    sum_y = sum(y)
+    sum_x_squared = sum(x_data ** 2 for x_data in x)
+    sum_x_times_y = sum(x_data * y_data for x_data, y_data in zip(x, y))
+
+    mean_x = sum_x / n
+    mean_y = sum_y / n
+
+    b = ((n * sum_x_times_y) - (sum_x * sum_y)) / ((n * sum_x_squared) - (sum_x ** 2))
+    a = mean_y - b * mean_x
+
+    x_symbol = sp.symbols('x')
+    polynomial = b * x_symbol + a
+
+    return sp.expand(polynomial)
