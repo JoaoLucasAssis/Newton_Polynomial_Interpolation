@@ -156,3 +156,41 @@ def trapezoidal_rule(x, y):
     
     print(f"Distância percorrida: {area_trapezio} metros.")
     return area_trapezio
+
+def bisection_method(polynomial, x_range, target_velocity, tol=1e-5, max_iter=1000):
+    """
+    Método da bisseção para encontrar o tempo em que o carro alcança a metade da velocidade máxima.
+
+    Args:
+        polynomial (sp.Expr): O polinômio de interpolação de Newton.
+        x_range (tuple): Intervalo de busca inicial (a, b).
+        tol (float): Tolerância para a solução.
+        max_iter (int): Número máximo de iterações.
+
+    Returns:
+        float: O tempo em que a velocidade é metade da velocidade máxima.
+    """
+
+    x = sp.symbols('x')
+
+    def func(t):
+        return float(polynomial.subs(x, t) - target_velocity)
+
+    a, b = x_range
+    fa, fb = func(a), func(b)
+
+    iter_count = 0
+    while (b - a) / 2 > tol and iter_count < max_iter:
+        c = (a + b) / 2
+        fc = func(c)
+
+        if fc == 0:
+            return c
+        elif fa * fc < 0:
+            b, fb = c, fc
+        else:
+            a, fa = c, fc
+
+        iter_count += 1
+
+    return (a + b) / 2
