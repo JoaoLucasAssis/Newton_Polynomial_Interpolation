@@ -68,15 +68,15 @@ def menu():
     print("\x1b[2J\x1b[1;1H") # Limpa a tela do terminal
 
     print("Menu")
-    print("1. Mostrar gráfico\n2. Mostrar velocidades\n3. Calcular distância total percorrida\n4. Sair")
+    print("1. Mostrar gráfico\n2. Mostrar velocidades\n3. Calcular distância percorrida\n4. Calcular bisseção\n5. Calcular mínimos quadrados\n6. Sair")
 
     o = int(input("Escolha uma opção: ").strip())
 
-    while o not in [1, 2, 3, 4]:
+    while o not in [1, 2, 3, 4, 5, 6]:
         print("\x1b[2J\x1b[1;1H") # Limpa a tela do terminal
 
         print("Opção inválida. Digite uma das opções abaixo.")
-        print("1. Mostrar gráfico\n2. Mostrar velocidades\n3. Calcular distância total percorrida\n4. Sair")
+        print("1. Mostrar gráfico\n2. Mostrar velocidades\n3. Calcular distância percorrida\n4. Calcular bisseção\n5. Calcular mínimos quadrados\n6. Sair")
         o = int(input("Escolha uma opção: ").strip())
     
     return o
